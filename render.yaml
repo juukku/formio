@@ -1,0 +1,29 @@
+services:
+  - name: formio-app
+    type: web
+    env: docker
+    repo: https://github.com/formio/formio
+    branch: master
+    plan: starter
+    buildCommand: ""
+    startCommand: ""
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVarGroups:
+      - name: formio-credentials
+        envVars:
+          - key: MONGO_URI
+            fromDatabase:
+              name: formio-db
+              property: connectionString
+          - key: JWT_SECRET
+            generateValue: true # Génère automatiquement un secret si besoin
+          - key: ADMIN_EMAIL
+            value: "admin@example.com" # Ajoute ton email d'administrateur
+          - key: ADMIN_PASSWORD
+            generateValue: true # Génère un mot de passe administrateur automatiquement
+databases:
+  - name: formio-db
+    type: mongodb
+    plan: free
+    ipAllowList: []
