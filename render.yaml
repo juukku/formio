@@ -9,19 +9,17 @@ services:
     startCommand: ""
     dockerfilePath: Dockerfile
     autoDeploy: true
-    envVarGroups:
-      - name: formio-credentials
-        envVars:
-          - key: MONGO_URI
-            fromDatabase:
-              name: formio-db
-              property: connectionString
-          - key: JWT_SECRET
-            generateValue: true # Génère automatiquement un secret si besoin
-          - key: ADMIN_EMAIL
-            value: "admin@example.com" # Ajoute ton email d'administrateur
-          - key: ADMIN_PASSWORD
-            generateValue: true # Génère un mot de passe administrateur automatiquement
+    envVars:
+      - key: MONGO_URI
+        fromDatabase:
+          name: formio-db
+          property: connectionString
+      - key: JWT_SECRET
+        value: "<ton-secret-jwt-manuellement>" # Défini manuellement ou via l'interface Render
+      - key: ADMIN_EMAIL
+        value: "admin@example.com"
+      - key: ADMIN_PASSWORD
+        value: "<ton-mot-de-passe-admin-manuellement>" # Défini manuellement ou via l'interface Render
 databases:
   - name: formio-db
     type: mongodb
